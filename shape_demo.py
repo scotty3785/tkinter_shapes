@@ -23,6 +23,7 @@
 #  
 
 from tkinter_shapes import Shape
+from tkinter import ttk
 
 def with_args( func_name, *args):
     """Helper function to make lambda functions easier
@@ -64,12 +65,39 @@ def objectSelect(event):
     for s in shape_list:
         try:
             if s.shape == element_id[0]:
-                shape.select(False)
-                shape = s
-                shape.select(True)
+                if shape == None:
+                    shape = s
+                    shape.select(True)
+                elif not s == shape:
+                    shape.select(False)
+                    shape = s
+                    shape.select(True)
+                else:
+                    shape.select(False)
+                    shape = None
         except IndexError as err:
             pass
+            
+def new_shape():
+    global shape_list
+    shape_list.append(Shape(canvas,200,100,50,5,color='red'))
     
+def del_shape():
+    global shape_list
+    global shape
+    for idx,s in enumerate(shape_list):
+        print(s.shape," - ",shape.shape)
+        if s.shape == shape.shape:
+            print("Deleting")
+            del shape_list[idx]
+            shape = None
+            
+
+def raise_shape():
+    shape.to_front()
+    
+def lower_shape():
+    shape.to_back()
 
 def main():
     global shape
@@ -79,7 +107,7 @@ def main():
     #Create a tkinter instance with a canvas and make it clickable
     root = Tk()
     canvas = Canvas(root,width=400,height=400)
-    canvas.grid()
+    canvas.grid(columnspan=2)
     canvas.bind('<ButtonPress-1>',objectSelect)
 
     #Create 4 shapes and add them to the list
@@ -92,7 +120,7 @@ def main():
     
     #Create a control panel to change the properties of the shape
     frm = Frame(root)
-    frm.grid()
+    frm.grid(row=2,column=0)
     Button(frm,text='<',command=rotate_left).grid(row=0,column=0)
     Button(frm,text='>',command=rotate_right).grid(row=0,column=2)
     Button(frm,text='Up',command=with_args(move,0,-5)).grid(row=0,column=1)
@@ -104,6 +132,13 @@ def main():
     Button(frm,text='+',command=with_args(change_sides,1)).grid(row=2,column=2)
     Button(frm,text='--',command=with_args(change_size,-5)).grid(row=3,column=0)
     Button(frm,text='++',command=with_args(change_size,5)).grid(row=3,column=2)
+    Frame(frm,bg="darkgray",height=5).grid(row=4,columnspan=3)
+    frm2 = Frame(root)
+    frm2.grid(row=2,column=1)
+    Button(frm2,text="New Shape",command=new_shape).grid(row=5)
+    Button(frm2,text="Delete Shape",command=del_shape).grid(row=6)
+    Button(frm2,text="Raise Shape",command=raise_shape).grid(row=7)
+    Button(frm2,text="Lower Shape",command=lower_shape).grid(row=8)
     
     #Start the mainloop
     root.mainloop()

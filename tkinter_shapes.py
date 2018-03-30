@@ -43,6 +43,9 @@ class Shape:
                 
         self.draw()
         
+    def __del__(self):
+        self.canvas.delete(self.shape)
+        
     def draw(self):
         """Draw the shape and set default configuration"""
         coords = self.get_poly_coords(self._x,self._y,self._radius,self._sides,self.rotation_angle)
@@ -78,6 +81,14 @@ class Shape:
         """Select/Unselect by marking the shape with a black outline or clear the outline"""
         bd = ('black',2) if state else (self.color,1)
         self.canvas.itemconfig(self.shape,outline=bd[0],width=bd[1])
+        
+    def to_front(self):
+        """Move shape in front of others"""
+        self.canvas.tag_raise(self.shape)
+        
+    def to_back(self):
+        """Move shape behind others"""
+        self.canvas.tag_lower(self.shape)
         
     @property
     def color(self):
