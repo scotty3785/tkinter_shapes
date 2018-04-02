@@ -16,15 +16,15 @@ Calculate position of the vertices of the shape
 Shape.rotate(self, rotate_by)
 ```
 Rotate the shape by the 'rotate_by' degrees''
-<h2 id="tkinter_shapes.Shape.color">color</h2>
-
-Get the color of the shape
 <h2 id="tkinter_shapes.Shape.draw">draw</h2>
 
 ```python
 Shape.draw(self)
 ```
 Draw the shape and set default configuration
+<h2 id="tkinter_shapes.Shape.color">color</h2>
+
+Get the color of the shape
 <h2 id="tkinter_shapes.Shape.radius">radius</h2>
 
 Get the radius of the shape
@@ -46,6 +46,18 @@ Get the x coordinate of the shape
 Shape.redraw(self)
 ```
 Recalculate shape coordinates and redraw
+<h2 id="tkinter_shapes.Shape.to_back">to_back</h2>
+
+```python
+Shape.to_back(self)
+```
+Move shape behind others
 <h2 id="tkinter_shapes.Shape.sides">sides</h2>
 
 Get the number of sides of the shape
+<h2 id="tkinter_shapes.Shape.to_front">to_front</h2>
+
+```python
+Shape.to_front(self)
+```
+Move shape in front of others
